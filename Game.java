@@ -3,7 +3,7 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Main {
+public class Game {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
