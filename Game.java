@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Scanner;
@@ -6,12 +7,14 @@ import java.util.Set;
 public class Game {
 
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         HangmanGame game = new HangmanGame(scanner);
-        game.start();
+        new HangmanGUI(game);
+        //game.start();
 
-        scanner.close();
+        //scanner.close();
     }
 }
 
@@ -31,18 +34,31 @@ class HangmanGame {
         this.wrongAttempts = 0;
     }
 
-    public void start() {
-        System.out.println("=== Galgenmännchen ===");
-        System.out.println();
+    public void start(String word) {
+        //System.out.println("=== Galgenmännchen ===");
+        //System.out.println();
+        secretWord = new SecretWord(word.toLowerCase(Locale.GERMAN));
+       // String word = askForSecretWord();
+        //secretWord = new SecretWord(word);
 
-        String word = askForSecretWord();
-        secretWord = new SecretWord(word);
 
-        hideSecretWord();
+        //hideSecretWord();
 
-        playGame();
+        //playGame();
 
-        printEndMessage();
+        //printEndMessage();
+    }
+    public void guessLetter(char guessedLetter){
+        if (guessedLetters.contains(guessedLetter)){
+            return;
+        }
+        guessedLetters.add(guessedLetter);
+        if (secretWord.contains(guessedLetter)){
+            secretWord.revealLetter(guessedLetter);
+        } else {
+            wrongAttempts++;
+
+        }
     }
 
     private String askForSecretWord() {
@@ -118,11 +134,11 @@ class HangmanGame {
         System.out.println();
     }
 
-    private boolean hasPlayerWon() {
+    public boolean hasPlayerWon() {
         return secretWord.isCompletelyRevealed();
     }
 
-    private boolean hasPlayerLost() {
+    public boolean hasPlayerLost() {
         return wrongAttempts >= MAX_WRONG_ATTEMPTS;
     }
 
@@ -136,6 +152,20 @@ class HangmanGame {
             System.out.println("Das gesuchte Wort war: " + secretWord.getOriginalWord());
         }
     }
+    public SecretWord getSecretWord(){
+    return secretWord;}
+    public  GuessedLetters getGuessedLetters(){
+        return guessedLetters;
+    }
+    public int getWrongAttempts(){
+        return wrongAttempts;
+    }
+    public void reset(String word) {
+        secretWord = new SecretWord(word.toLowerCase(Locale.GERMAN));
+        guessedLetters.clear();
+        wrongAttempts = 0;
+    }
+
 }
 
 class SecretWord {
@@ -224,6 +254,9 @@ class GuessedLetters {
         }
 
         return result;
+    }
+    public void clear() {
+        letters.clear();
     }
 }
 
