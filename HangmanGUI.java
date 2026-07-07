@@ -14,6 +14,7 @@ public class HangmanGUI {
     private JPanel panel;
     private JPanel startPanel;
     private JButton startButton;
+    private JLabel hangmanLabel;
 
     public HangmanGUI(HangmanGame game) {
         this.game = game;
@@ -34,6 +35,7 @@ public class HangmanGUI {
         wordLabel = new JLabel("Noch kein Spiel gestartet");
         guessedLabel = new JLabel("Geratene Buchstaben:");
         attemptsLabel = new JLabel("Fehlversuche: 0/6");
+        hangmanLabel = new JLabel(getHangman(0));
 
         inputField = new JTextField(2);
         guessButton = new JButton("Raten");
@@ -42,6 +44,7 @@ public class HangmanGUI {
         panel.add (wordLabel);
         panel.add (guessedLabel);
         panel.add(attemptsLabel);
+        panel.add(hangmanLabel);
         panel.add(inputField);
         panel.add(guessButton);
 
@@ -92,6 +95,7 @@ public class HangmanGUI {
                     "Fehlversuche:"
                             + game.getWrongAttempts()
                     +"/6");
+            hangmanLabel.setText(getHangman(game.getWrongAttempts()));
 
         }
         if (game.hasPlayerWon()) {
@@ -192,5 +196,73 @@ public class HangmanGUI {
         closeButton.addActionListener(e -> System.exit(0));
 
         closeButton.addActionListener(e -> System.exit(0));
+    }
+    private String getHangman(int attempts) {
+
+        switch (attempts) {
+
+            case 0:
+                return "<html><pre>"
+                        + " +---+<br>"
+                        + " |<br>"
+                        + " |<br>"
+                        + " |<br>"
+                        + "====="
+                        + "</pre></html>";
+
+            case 1:
+                return "<html><pre>"
+                        + " +---+<br>"
+                        + " |   O<br>"
+                        + " |<br>"
+                        + " |<br>"
+                        + "====="
+                        + "</pre></html>";
+
+            case 2:
+                return "<html><pre>"
+                        + " +---+<br>"
+                        + " |   O<br>"
+                        + " |   |<br>"
+                        + " |<br>"
+                        + "====="
+                        + "</pre></html>";
+
+            case 3:
+                return "<html><pre>"
+                        + " +---+<br>"
+                        + " |   O<br>"
+                        + " |  /|<br>"
+                        + " |<br>"
+                        + "====="
+                        + "</pre></html>";
+
+            case 4:
+                return "<html><pre>"
+                        + " +---+<br>"
+                        + " |   O<br>"
+                        + " |  /|\\<br>"
+                        + " |<br>"
+                        + "====="
+                        + "</pre></html>";
+
+            case 5:
+                return "<html><pre>"
+                        + " +---+<br>"
+                        + " |   O<br>"
+                        + " |  /|\\<br>"
+                        + " |  /<br>"
+                        + "====="
+                        + "</pre></html>";
+
+            default:
+                return "<html><pre>"
+                        + " +---+<br>"
+                        + " |   O<br>"
+                        + " |  /|\\<br>"
+                        + " |  / \\<br>"
+                        + "====="
+                        + "</pre></html>";
+        }
     }
 }
